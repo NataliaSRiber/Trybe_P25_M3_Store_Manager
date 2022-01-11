@@ -1,3 +1,5 @@
+const { StatusCodes } = require('http-status-codes');
+
 const invalidData = (status, message) => ({
   code: 'invalid_data',
   status,
@@ -22,9 +24,16 @@ const stockProblem = (status, message) => ({
   message,
 });
 
+const wrongId = {
+  code: 'invalid_data',
+  status: StatusCodes.UNPROCESSABLE_ENTITY,
+  message: 'Wrong id format',
+};
+
 module.exports = {
   invalidData,
   notFound,
   stockProblem,
   alreadyExists,
+  wrongId,
 };

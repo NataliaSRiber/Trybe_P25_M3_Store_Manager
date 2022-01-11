@@ -8,10 +8,10 @@ const { validateProduct } = require('./validations');
 
 module.exports = async (product) => {
   const findProduct = await ModelProducts.find(product);
-  console.log(findProduct);
+  
   const validateError = validateProduct(product).error;
 
-  if (findProduct) {
+  if (findProduct.length > 0) {
     return alreadyExists(StatusCodes.UNPROCESSABLE_ENTITY);
   }
 
