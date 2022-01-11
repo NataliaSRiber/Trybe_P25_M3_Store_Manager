@@ -5,7 +5,8 @@ module.exports = async (anything) => {
   const conn = await connect();
       
   if (!anything) {
-   return await conn.collection('products').find().toArray();
+   const noProduct = await conn.collection('products').find().toArray();
+   return noProduct;
   }
 
   if (anything.name) {
