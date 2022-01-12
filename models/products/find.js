@@ -5,8 +5,8 @@ module.exports = async (anything) => {
   const conn = await connect();
       
   if (!anything) {
-   const noProduct = await conn.collection('products').find().toArray();
-   return noProduct;
+    const noProduct = await conn.collection('products').find().toArray();
+    return noProduct;
   }
 
   if (anything.name) {
@@ -15,8 +15,6 @@ module.exports = async (anything) => {
   }
   if (anything) {
     const foundProductById = await conn.collection('products').findOne({ _id: ObjectId(anything) });
-  console.log(foundProductById);
-
     return foundProductById;
   }
 };
