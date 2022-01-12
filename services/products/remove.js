@@ -10,9 +10,11 @@ module.exports = async (id) => {
   }
   const findProductById = await ModelProducts.find(id);
     
-    if (!findProductById) {
+  if (!findProductById) {
     return wrongId;
   }
+
+  await ModelProducts.remove(id);
     
   return { status: StatusCodes.OK, message: findProductById };
 };
