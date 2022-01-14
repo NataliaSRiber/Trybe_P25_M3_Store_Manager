@@ -30,10 +30,17 @@ const wrongId = {
   message: 'Wrong id format',
 };
 
+const wrongProductSaleId = {
+  code: 'invalid_data',
+  status: StatusCodes.UNPROCESSABLE_ENTITY,
+  message: 'Wrong product ID or invalid quantity',
+};
+
 module.exports = {
   invalidData,
   notFound,
   stockProblem,
   alreadyExists,
   wrongId,
+  wrongProductSaleId,
 };
