@@ -30,7 +30,7 @@ module.exports = async (sales) => {
 
     if (errObject) {
       return errObject; 
-    };
+    }
     return acc;
   }, undefined);
 

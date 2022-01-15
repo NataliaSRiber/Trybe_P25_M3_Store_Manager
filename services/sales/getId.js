@@ -2,7 +2,6 @@ const { StatusCodes } = require('http-status-codes');
 const ModelSales = require('../../models/sales');
 const { saleNotFound } = require('../../utilities/setErrors');
 
-
 // agora implementa as regras de negócio(validações)
 
 module.exports = async (id) => {
