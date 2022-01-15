@@ -36,6 +36,12 @@ const wrongProductSaleId = {
   message: 'Wrong product ID or invalid quantity',
 };
 
+const saleNotFound = {
+  code: 'not_found',
+  status: StatusCodes.NOT_FOUND,
+  message: 'Sale not found',
+};
+
 module.exports = {
   invalidData,
   notFound,
@@ -43,4 +49,5 @@ module.exports = {
   alreadyExists,
   wrongId,
   wrongProductSaleId,
+  saleNotFound,
 };

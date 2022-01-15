@@ -7,7 +7,7 @@ const { validateSale } = require('./validations');
 
 // agora implementa as regras de negócio(validações)
 
-const salesValidation = (sale) => {
+const salesValidation = async (sale) => {
   const validateError = validateSale(sale).error;
   // console.log(validateError);
   
@@ -16,21 +16,26 @@ const salesValidation = (sale) => {
   }
   
   const { productId } = sale;
-  const findSale = ModelProducts.find(productId);
+
+  const findSale = await ModelProducts.find(productId);
   
-  if (findSale.length === 0) {
-    return wrongProductSaleId(StatusCodes.UNPROCESSABLE_ENTITY);
+  if (findSale === null || findSale.length === 0) {
+    return wrongProductSaleId;
   }
 };
 
 module.exports = async (sales) => {
-  const mapSales = sales.map((sale) => salesValidation(sale));
+  const validationsError = await sales.reduce(async (acc, currVar) => {
+    const errObject = await salesValidation(currVar);
 
-  const getError = mapSales.find((a) => typeof a === 'object');
-  console.log(getError);
+    if (errObject) {
+      return errObject; 
+    };
+    return acc;
+  }, undefined);
 
-  if (getError) {
-    return getError;
+  if (validationsError) {
+    return validationsError;
   }
 
   const newSale = (await ModelSales.create(sales)).ops[0];
