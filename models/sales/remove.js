@@ -3,9 +3,7 @@ const connect = require('../connection');
 
 module.exports = async (id) => {
   const conn = await connect();
-  const deletedProduct = await conn.collection('products').deleteOne(
+  await conn.collection('sales').deleteOne(
     { _id: ObjectId(id) },
   );
-
-  return deletedProduct;
 };

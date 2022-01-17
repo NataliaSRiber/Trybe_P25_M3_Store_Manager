@@ -42,6 +42,12 @@ const saleNotFound = {
   message: 'Sale not found',
 };
 
+const wrongSaleId = {
+  code: 'invalid_data',
+  status: StatusCodes.UNPROCESSABLE_ENTITY,
+  message: 'Wrong sale ID format',
+};
+
 module.exports = {
   invalidData,
   notFound,
@@ -50,4 +56,5 @@ module.exports = {
   wrongId,
   wrongProductSaleId,
   saleNotFound,
+  wrongSaleId,
 };
