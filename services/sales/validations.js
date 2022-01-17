@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const schema = Joi.object({
+const schema = Joi.array().items({
   productId: Joi.string().min(24).required(),
   quantity: Joi.number().integer().min(1).required(),
 });

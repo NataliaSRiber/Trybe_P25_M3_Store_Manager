@@ -1,4 +1,5 @@
 // importa a camada de modelo
+const { ObjectId } = require('mongodb');
 const { StatusCodes } = require('http-status-codes');
 const ModelProducts = require('../../models/products');
 const ModelSales = require('../../models/sales');
@@ -7,35 +8,22 @@ const { validateSale } = require('./validations');
 
 // agora implementa as regras de negócio(validações)
 
-const salesValidation = async (sale) => {
-  const validateError = validateSale(sale).error;
-  // console.log(validateError);
-  
+module.exports = async (sales) => {
+  const validateError = validateSale(sales).error;
+    
   if (validateError) {
     return wrongProductSaleId;
   }
-  
-  const { productId } = sale;
 
-  const findSale = await ModelProducts.find(productId);
+  const findProducts = await ModelProducts.find(sales);
+  const mapProducts = findProducts.map(({ _id: id }) => ObjectId(id).toString());
   
-  if (findSale === null || findSale.length === 0) {
+  const mapSales = sales.map((sale) => sale.productId); 
+  
+  const comparingProducts = mapSales.filter((id) => mapProducts.includes(id));
+  
+  if (sales.length !== comparingProducts.length) {
     return wrongProductSaleId;
-  }
-};
-
-module.exports = async (sales) => {
-  const validationsError = await sales.reduce(async (acc, currVar) => {
-    const errObject = await salesValidation(currVar);
-
-    if (errObject) {
-      return errObject; 
-    }
-    return acc;
-  }, undefined);
-
-  if (validationsError) {
-    return validationsError;
   }
 
   const newSale = (await ModelSales.create(sales)).ops[0];
